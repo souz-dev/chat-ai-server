@@ -4,6 +4,8 @@
     "module": "nodenext",
     "outDir": "dist",
     "rootDir": "src",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
