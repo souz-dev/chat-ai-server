@@ -26,7 +26,7 @@ WORKDIR /app
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/docker ./docker
-COPY .env ./
+# COPY .env ./
 # Adicione outros arquivos necessários para runtime
 
 RUN npm ci --omit=dev
