@@ -1,20 +1,33 @@
-# ---------- build ----------
-FROM node:20-alpine AS builder
+# ---------- builder ----------
+FROM node:20 AS builder
+
 WORKDIR /app
+
 COPY package*.json ./
 RUN npm ci
-COPY . .
+
+# Copia apenas o backend, ignora functions/
+COPY src ./src
+COPY tsconfig.json ./
+COPY .env ./
+COPY drizzle.config.ts ./
+COPY docker/ ./docker
+COPY prisma/ ./prisma
+# Adicione outros arquivos necessários para o backend
+
 RUN npm run build   # compila TS -> dist/
 
 # ---------- runtime ----------
-FROM node:20-alpine
-WORKDIR /app
-ENV NODE_ENV=production
-COPY package*.json ./
-RUN npm ci --omit=dev
-COPY --from=builder /app/dist ./dist
-# Se usa Drizzle, copie as migrações (pasta 'drizzle') geradas no repo:
-COPY --from=builder /app/drizzle ./drizzle
+FROM node:20
 
-EXPOSE 3000
-CMD ["node", "dist/server.js"]  # ajuste se seu entrypoint for outro (ex.: dist/main.js)
+WORKDIR /app
+
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/.env ./
+COPY --from=builder /app/docker ./docker
+# Adicione outros arquivos necessários para runtime
+
+RUN npm ci --omit=dev
+
+CMD ["node", "dist/server.js"]
