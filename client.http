@@ -1,0 +1,51 @@
+@baseUrl = http://localhost:3333
+@firebaseToken = eyJhbGciOiJSUzI1NiIsImtpZCI6IjA1NTc3MjZmYWIxMjMxZmEyZGNjNTcyMWExMDgzZGE2ODBjNGE3M2YiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbGV0bWVhc2stYTE1NGEiLCJhdWQiOiJsZXRtZWFzay1hMTU0YSIsImF1dGhfdGltZSI6MTc1ODgwNzMzMiwidXNlcl9pZCI6IlBzMk52eUZLVEhPWVFFNHlNYThSZEFyNFp0bzIiLCJzdWIiOiJQczJOdnlGS1RIT1lRRTR5TWE4UmRBcjRadG8yIiwiaWF0IjoxNzU4ODA3MzMyLCJleHAiOjE3NTg4MTA5MzIsImVtYWlsIjoic291ei5kZXZlbG9wZXJAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbInNvdXouZGV2ZWxvcGVyQGdtYWlsLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.eIkrVCmNhbbAXxKIcHnh9UhwZFGPeoS4cEsPej6V_rw4i223XEH3SkCCn3IgxEZcLHJst7UvoAdemJzFaEhTQreesFRZ0HMzfuECjdcUj5eOQGxYFq3yPWdnnos1cuRBrc_ENzAobspVoYplkAwm5NyaUMdRIILzSWNoud8F4YwdqqFkHrMjlx64fDRQoMXwONnxxIMv0LPC-3SdZQnxLv0yAS-NuWHyF_kmZaYwLI1Uy_3aol_xhIchKOj2AobMD7iTRrJvxYsR1cSYlb9pJ00sXahrpCeUJsr72fa1jXFCQxBceYRzsTh7oppBiRLF3E--qAre3zt7toTc8vw-kg
+
+# @name healthCheck
+GET {{baseUrl}}/health
+
+###
+
+# @name getRooms
+GET {{baseUrl}}/rooms
+
+###
+
+# @name createRoomAuth
+POST {{baseUrl}}/rooms
+Content-Type: application/json
+Authorization: Bearer {{firebaseToken}}
+
+{
+  "name": "Sala Com Auth",
+  "description": "Sala criada por usuário autenticado"
+}
+
+###
+
+@roomId = {{createRoomAuth.response.body.$.roomId}}
+
+###
+
+# @name createQuestionAuth
+POST {{baseUrl}}/rooms/{{roomId}}/questions
+Content-Type: application/json
+Authorization: Bearer {{firebaseToken}}
+
+{
+  "question": "Como implementar autenticação Firebase no Node.js?"
+}
+
+###
+
+# @name uploadAudioAuth
+POST {{baseUrl}}/rooms/{{roomId}}/audio
+Authorization: Bearer {{firebaseToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="audio.mp3"
+Content-Type: audio/mpeg
+
+< ./audio-example.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
