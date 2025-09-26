@@ -9,7 +9,7 @@ RUN npm ci
 # Copia apenas o backend, ignora functions/
 COPY src ./src
 COPY tsconfig.json ./
-COPY .env ./
+# COPY .env ./
 COPY drizzle.config.ts ./
 COPY docker/ ./docker
 # Adicione outros arquivos necessários para o backend
