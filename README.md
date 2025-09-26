@@ -1,4 +1,4 @@
-# NLW Agents
+# AI Agents
 
 Projeto desenvolvido utilizando tecnologias modernas para criação de uma API robusta e eficiente com integração Firebase Cloud Functions para processamento de IA.
 
