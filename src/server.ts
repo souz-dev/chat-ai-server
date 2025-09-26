@@ -19,10 +19,6 @@ const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 await app.register(firebaseAuth);
 
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv/config"); // carrega .env apenas localmente
-}
-
 app.register(fastifyCors, {
   origin: "http://localhost:5173",
   allowedHeaders: ["Content-Type", "Authorization"],

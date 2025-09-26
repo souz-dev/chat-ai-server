@@ -17,5 +17,12 @@
     "skipLibCheck": true,
     "moduleResolution": "node16",
     "strictNullChecks": true
-  }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "functions"
+  ]
 }
