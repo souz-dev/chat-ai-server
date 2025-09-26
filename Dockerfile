@@ -12,7 +12,7 @@ COPY tsconfig.json ./
 COPY .env ./
 COPY drizzle.config.ts ./
 COPY docker/ ./docker
-COPY prisma/ ./prisma
+# Adicione outros arquivos necessários para o backend
 # Adicione outros arquivos necessários para o backend
 
 RUN npm run build   # compila TS -> dist/
