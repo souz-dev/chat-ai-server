@@ -1,5 +1,5 @@
 # ---------- builder ----------
-FROM node:20 AS builder
+FROM node:22 AS builder
 
 WORKDIR /app
 
@@ -19,7 +19,7 @@ COPY docker/ ./docker
 RUN npm run build   # compila TS -> dist/
 
 # ---------- runtime ----------
-FROM node:20
+FROM node:22
 
 WORKDIR /app
 
